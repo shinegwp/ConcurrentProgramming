@@ -1,4 +1,4 @@
-package com.shine.threadbase;
+package com.shine.thread.base;
 
 import java.util.Arrays;
 import java.util.Date;
@@ -92,11 +92,9 @@ public class NewThread extends Thread{
 //runnable接口中只有一个run方法
 //作为一个线程的任务存在
 class NewThread1 implements Runnable{
-
 	@Override
 	public void run() {
 		// TODO Auto-generated method stub
-		
 		while (true) {
 			//演示sleep
 			
@@ -107,13 +105,8 @@ class NewThread1 implements Runnable{
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			
 		}
-		
 	}
-
-	
-	
 	public static void main(String[] args) {
 		Thread thread = new Thread(new NewThread());
 		
@@ -121,13 +114,11 @@ class NewThread1 implements Runnable{
 		thread.start();
 		System.out.println("main的时间");
 	}
-	
 }
 
 //第二种继承Thread类
 class NewThread2 extends Thread{
 	@Override
-	
 	public synchronized void run() {
 		// TODO Auto-generated method stub
 		while (true) {
@@ -140,7 +131,6 @@ class NewThread2 extends Thread{
 			}
 		}
 	}
-	
 	public static void main(String[] args) {
 		Thread thread1 = new NewThread2();
 		thread1.setName("伟鹏啊");
@@ -148,7 +138,6 @@ class NewThread2 extends Thread{
 		while (true) {
 			System.out.println("main的时间");
 			synchronized (thread1) {
-				
 				try {
 					Thread.sleep(1000);
 					thread1.notify();
@@ -157,7 +146,6 @@ class NewThread2 extends Thread{
 					e.printStackTrace();
 				}
 			}
-			
 		}
 	}
 }
@@ -174,26 +162,20 @@ class NewThread3{
 				System.out.println("匿名内部类实现");
 			}
 		}.start();
-		
 		new Thread (new Runnable(){
-
 			@Override
 			public void run() {
 				// TODO Auto-generated method stub
 				System.out.println("接口");
 			}
-			
 		}).start();
-		
 		//动态分派
 		new Thread (new Runnable(){
-
 			@Override
 			public void run() {
 				// TODO Auto-generated method stub
 				System.out.println("father");
 			}
-			
 		}) {
 			@Override
 			public void run() {
@@ -207,17 +189,12 @@ class NewThread3{
 //第四种  实现Callable接口，具有返回值和抛异常
 //Callable中只有一个call方法,类似于run方法
 class NewThread4 implements Callable<Integer>{
-    
-	
 	public static void main(String[] args) {
 		NewThread4 t4 = new NewThread4();
 		//对线程任务进行封装，实现了runnable接口
 		FutureTask<Integer> task = new FutureTask<>(t4);
-		
 		Thread t = new Thread(task);
-		
 		t.start();
-		
 		try {
 			Integer result = task.get();
 			System.out.println("线程执行的结果为"+result);
@@ -228,34 +205,25 @@ class NewThread4 implements Callable<Integer>{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
 	}
 	@Override
 	public Integer call() throws Exception {
 		// TODO Auto-generated method stub
-		
 		System.out.println("正在忙碌的敲代码");
 		return 1;
 	}
-	
 }
 
 //第五种  定时器Timer(可用quartz框架)
 class NewThread5{
-	
-	
 	public static void main(String[] args) {
-		
 		Timer timer = new Timer();
-		
 		timer.schedule(new TimerTask(){
-
 			@Override
 			public void run() {
 				// TODO Auto-generated method stub
 				System.out.println("高伟鹏正在努力工作啊！"+System.currentTimeMillis());
 			}
-			
 		}, 0, 1000);
 	}
 }
@@ -263,21 +231,15 @@ class NewThread5{
 
 //第六种  使用线程池（Executor）来实现，使用线程，从线程中拿，用完了再放回去；等于拿空间换时间
 class NewThread6{
-	
 	public static void main(String[] args) {
 		Executor threadPool = Executors.newFixedThreadPool(10);//创建一个有10个线程的线程池
-		
 		threadPool.execute(new Runnable(){
-
 			@Override
 			public void run() {
 				// TODO Auto-generated method stub
 				System.out.println("高伟鹏在努力工作啊"+new Date().toLocaleString());
 			}
-			
 		});
-		
-		
 		Executor threadPool1 = Executors.newCachedThreadPool();
 		//会创建出一部分线程，认位不够用就创建，认为够用就回收
 		for (int i = 0; i< 1000; i++) {
@@ -287,24 +249,19 @@ class NewThread6{
 					// TODO Auto-generated method stub
 					System.out.println("高伟鹏在努力工作啊"+new Date().toLocaleString()+Thread.currentThread().getName());
 				}
-				
 			});
 		}
 	}
 }
 //使用Lambda表达式实现
 class NewThread7{
-	
 	public int add (List<Integer> values) {
 		values.parallelStream().forEach(System.out::println);
 		return values.parallelStream().mapToInt(a -> a).sum();
 	}
 	public static void main(String[] args) {
 		List<Integer> values = Arrays.asList(10,20,30,40);
-		
 		int res = new NewThread7().add(values);
 		System.out.println("计算结果为：" + res);
 	}
-	
-	
 }
