@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
-    <wb-module deploy-name="Thread">
+    <wb-module deploy-name="ConcurrentProgramming">
         <wb-resource deploy-path="/" source-path="/WebContent" tag="defaultRootSource"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/noteMarkdown"/>
-        <property name="context-root" value="Thread"/>
-        <property name="java-output-path" value="/Thread/build/classes"/>
+        <property name="java-output-path" value="/ConcurrentProgramming/build/classes"/>
+        <property name="context-root" value="ConcurrentProgramming"/>
     </wb-module>
 </project-modules>
