@@ -9,7 +9,7 @@ import java.util.concurrent.TimeUnit;
 * @version 创建时间：2018年8月6日 上午11:38:39
 * @describe
 */
-public class CommunicationDemo {
+public class SignalDemo {
 	private volatile int signal;
 	public synchronized void set (int signal) {
 		notifyAll(); // notify方法会随机叫醒一个处于wait状态的线程
@@ -36,7 +36,7 @@ public class CommunicationDemo {
 		return signal;
 	}
 	public static void main(String[] args) {
-		CommunicationDemo cm = new CommunicationDemo();
+		SignalDemo cm = new SignalDemo();
 		Target1 t1 = new Target1(cm);
 		Target2 t2 = new Target2(cm);
 		new Thread(t2).start();
@@ -86,8 +86,8 @@ public class CommunicationDemo {
 	}
 }
 class Target1 implements Runnable {
-	private CommunicationDemo demo;
-	public Target1(CommunicationDemo demo) {
+	private SignalDemo demo;
+	public Target1(SignalDemo demo) {
 		this.demo = demo;
 	}
 	@Override
@@ -96,8 +96,8 @@ class Target1 implements Runnable {
 	}
 }
 class Target2 implements Runnable {
-	private CommunicationDemo demo;
-	public Target2(CommunicationDemo demo) {
+	private SignalDemo demo;
+	public Target2(SignalDemo demo) {
 		this.demo = demo;
 	}
 	@Override
