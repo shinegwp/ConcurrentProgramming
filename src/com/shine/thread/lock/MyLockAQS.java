@@ -16,15 +16,10 @@ public class MyLockAQS implements Lock {
 	Helper helper = new Helper();
 
 	private class Helper extends AbstractQueuedSynchronizer {
-
 		@Override
 		protected boolean tryAcquire(int arg) {
-			// TODO Auto-generated method stub
-
 			// 如果第一个线程进来可以拿到锁，则我们返回true
-
 			// 如果第二个线程进来拿不到锁，返回false，有种特例，若进来的线程和当前保存的线程是同一个线程，可以拿到锁，并更新状态值
-
 			// 如何判断是第几个线程进入
 			int state = getState();
             Thread t = Thread.currentThread();
@@ -39,16 +34,12 @@ public class MyLockAQS implements Lock {
 			}
 			return false;
 		}
-
 		@Override
 		protected boolean tryRelease(int arg) {
-			// TODO Auto-generated method stub
 			// 锁的获取和释放肯定是一一对应的，那么调用此方法的线程 一定是当前线程
-
 			if (Thread.currentThread() != getExclusiveOwnerThread()) {
 				throw new RuntimeException();
 			}
-
 			int state = getState() - arg;
 			boolean flag = false;
 			if (state == 0) {
@@ -58,48 +49,34 @@ public class MyLockAQS implements Lock {
 			setState(state);
 			return flag;
 		}
-
 		Condition newConditionObject() {
 			return new ConditionObject();
 		}
 	}
-
 	@Override
 	public void lock() {
-		// TODO Auto-generated method stub
 		helper.acquire(1);
 	}
-
 	@Override
 	public void lockInterruptibly() throws InterruptedException {
-		// TODO Auto-generated method stub
 		helper.acquireInterruptibly(1);
 	}
-
 	@Override
 	public boolean tryLock() {
-		// TODO Auto-generated method stub
 		return helper.tryAcquire(1);
 	}
-
 	@Override
 	public boolean tryLock(long time, TimeUnit unit) throws InterruptedException {
-		// TODO Auto-generated method stub
 		return helper.tryAcquireNanos(1, unit.toNanos(time));
 	}
-
 	@Override
 	public void unlock() {
-		// TODO Auto-generated method stub
 		helper.release(1);
 	}
-
 	@Override
 	public Condition newCondition() {
-		// TODO Auto-generated method stub
 		return helper.newConditionObject();
 	}
-
 	public static void main(String[] args) {
 		Sequenceb s = new Sequenceb();
 		new Thread(new Runnable() {
@@ -125,11 +102,9 @@ public class MyLockAQS implements Lock {
 		}).start();
 	}
 }
-
 class Sequenceb {
 	private int value;
 	private MyLockAQS ml = new MyLockAQS();
-
 	public int getNext() {
 		ml.lock();
 		try {
@@ -143,6 +118,5 @@ class Sequenceb {
 		} finally {
 			ml.unlock();
 		}
-
 	}
 }
