@@ -64,9 +64,9 @@ public class CountDownLatchDemo {
 		String line = null;
 		BufferedReader br = null;
 		try {
-			br = new BufferedReader(new FileReader("e:\\nums.txt"));
+			br = new BufferedReader(new FileReader("e:\\nums.txt"));//获取文件输入流
 			while ((line = br.readLine()) != null) {
-				contents.add(line);
+				contents.add(line);//获取文件每一行的值
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
